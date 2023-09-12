@@ -1,5 +1,9 @@
 package org.example;
 
+import org.example.Customer.CustomerDao;
+import org.example.Customer.CustomerDaoWithMySql;
+import org.example.Customer.CustomerService;
+import org.example.Customer.ICustomerDao;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -41,11 +45,29 @@ public class App
 //        Item item3 = new ItemImpl();
 //        Store store1 = new Store(item3);
         // But if we create obj that it defines field in parameterized constructor
-        // 1. It does not need to create Item item => it already created => IOC (inversion of control)
-        // 2. If any exception occurs we know beforehand => we cannot create store without item field if we do we get exception
-        // 3. Defining item before creating store helps us define implementation before , it is not dependent store
+        //  It does not need to create Item item => it already created => IOC (inversion of control)
+        //  If any exception occurs we know beforehand => we cannot create store without item field if we do we get exception
+        // Defining item before creating store helps us define implementation before , it is not dependent store
 
         // 4. Practice DI and IOC with real examples => https://www.youtube.com/watch?v=YqDLfjE-mes&list=RDCMUCRjiquPh4mjPNoOV9eCilXQ&start_radio=1&rv=YqDLfjE-mes&t=3
+
+        //task: we need operations for customer then save customer data in Oracle sql
+        // then we add feature => save customer in mysql
+        // SOLID principle => O => open for extension closed for modification => not modify code only extend (add new class)
+
+
+        // We avoid NEW keyword if we use new when change value we should search and change source code and new impacts performanca and memory
+        // if we don't need additional object we  instantiate only once whenever we need use it
+        // in our case (dao) we don't have any type we use this as a function we don't need create new instance obj when every call
+        // spring container detect it automatically. (IOC) we give control to spring
+        // behind the scene it create obj  with new , but it makes more with performant , scalable and testable way.
+//        ICustomerDao customerDao = new CustomerDao();
+        ICustomerDao customerDao = (ICustomerDao) applicationContext.getBean("database");
+//        CustomerService customerService = new CustomerService(customerDao);
+        CustomerService customerService = (CustomerService) applicationContext.getBean("service");
+        customerService.addCustomer();// add to oracle
+        // i must change source code i should modify customerService code add if block or add new method
+        // interface is useful define similar class we define interface as reference type
 
     }
 }

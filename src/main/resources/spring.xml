@@ -12,5 +12,6 @@
 </bean>
     <context:component-scan  base-package="org.example"> </context:component-scan>
 
-
+<bean id="service" class="org.example.Customer.CustomerService"></bean>
+<bean id="database" class="org.example.Customer.CustomerDao"></bean>
 </beans>
