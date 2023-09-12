@@ -5,6 +5,7 @@ import org.example.Customer.CustomerDaoWithMySql;
 import org.example.Customer.CustomerService;
 import org.example.Customer.ICustomerDao;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class App
@@ -18,7 +19,7 @@ public class App
         // in spring we can note in spring.xml and when change xml file we can change outcome without refactoring source code
         // spring.xml make decision for which class should be compatible with vehicle keyword
 
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring.xml");
+//        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("spring.xml");
 //        Vehicle vehicle = (Vehicle) applicationContext.getBean("vehicle");
 //        vehicle.drive();
 
@@ -61,13 +62,26 @@ public class App
         // in our case (dao) we don't have any type we use this as a function we don't need create new instance obj when every call
         // spring container detect it automatically. (IOC) we give control to spring
         // behind the scene it create obj  with new , but it makes more with performant , scalable and testable way.
-//        ICustomerDao customerDao = new CustomerDao();
-        ICustomerDao customerDao = (ICustomerDao) applicationContext.getBean("database");
-//        CustomerService customerService = new CustomerService(customerDao);
-        CustomerService customerService = (CustomerService) applicationContext.getBean("service");
-        customerService.addCustomer();// add to oracle
+//     //  ICustomerDao customerDao = new CustomerDao();
+//        ICustomerDao customerDao = (ICustomerDao) applicationContext.getBean("database");
+//    //    CustomerService customerService = new CustomerService(customerDao);
+//        CustomerService customerService = (CustomerService) applicationContext.getBean("service");
+//        customerService.addCustomer();// add to oracle
         // i must change source code i should modify customerService code add if block or add new method
         // interface is useful define similar class we define interface as reference type
+
+        // 5. Constructor injection
+//        Bike bike = (Bike) applicationContext.getBean("bike");
+//        System.out.println(bike);
+
+        // 6.@Autowired
+//        Vehicle bus = (Vehicle) applicationContext.getBean("bus");
+//        System.out.println(bus);
+
+        // 7. Java config
+        ApplicationContext factory = new AnnotationConfigApplicationContext(AppConfig.class);
+        Vehicle bus =  factory.getBean(Bus.class);
+        System.out.println(bus);
 
     }
 }
