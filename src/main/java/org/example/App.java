@@ -80,8 +80,13 @@ public class App
 
         // 7. Java config
         ApplicationContext factory = new AnnotationConfigApplicationContext(AppConfig.class);
-        Vehicle bus =  factory.getBean(Bus.class);
-        System.out.println(bus);
+//        Vehicle bus =  factory.getBean(Bus.class);
+//        System.out.println(bus);
 
+        // 8. AOP
+        ICustomerDao customerDao = (ICustomerDao) factory.getBean("customerdao");
+        ICustomerDao customerDao2 = (ICustomerDao) factory.getBean("msSql");
+        customerDao.add();
+        customerDao2.add();
     }
 }
